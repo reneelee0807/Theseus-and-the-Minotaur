@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ass2_v3</string>
+    <string name="welcome_string">Welcome to Our Game</string>
+    <string name="wel_string">Welcome To Our Game</string>
+    <string name="win_title">Congrats! Theseus exits successfully</string>
+    <string name="fail_title">Theseus was killed</string>
+    <string name="finished_button1">End Game</string>
+    <string name="finished_button2">Start New Game</string>
+</resources>

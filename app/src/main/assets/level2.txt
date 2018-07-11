@@ -1,0 +1,1 @@
+oxxxo,xoxoo,xoxoo,oxxxo,ooooo;ooooo,xooxo,oxoxo,xooxo,ooooo;2,3;2,1;0,2
