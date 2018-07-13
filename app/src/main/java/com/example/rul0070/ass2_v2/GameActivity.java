@@ -107,22 +107,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-//
-//    public void moveUp(View view) {
-//        gameView.move("up");
-//    }
-//
-//    public void moveDown(View view) {
-//        gameView.move("down");
-//    }
-//
-//    public void moveLeft(View view) {
-//        gameView.move("left");
-//    }
-//
-//    public void moveRight(View view) {
-//        gameView.move("right");
-//    }
+
 
 
 }

@@ -16,14 +16,14 @@ public class GameController {
         view = theView;
     }
 
-    public Game getGame(String level){
-       return  game.getGame(level);
-    }
-
-    public void MakeMap(String level){
-//        Game.load(levelString);
-//        View.onDraw();
-    }
+//    public Game getGame(String level){
+//       return  game.getGame(level);
+//    }
+//
+//    public void MakeMap(String level){
+////        Game.load(levelString);
+////        View.onDraw();
+//    }
 
     public void setGameLevel(Context context, String fileName){
         game.load(context, fileName);
@@ -70,21 +70,29 @@ public class GameController {
         return game.getCellSizeY();
     }
 
-    public Boolean moveUp(Direction direction){
-        return game.moveTheseus(Direction.UP);
+//    public Boolean moveUp(Direction direction){
+////        return game.moveTheseus(Direction.UP);
+////    }
+////
+////    public Boolean moveDown(Direction direction){
+////        return game.moveTheseus(Direction.DOWN);
+////    }
+////
+////    public Boolean moveRight(Direction direction){
+////        return game.moveTheseus(Direction.RIGHT);
+////    }
+////
+////    public Boolean moveLeft(Direction direction){
+////        return game.moveTheseus(Direction.LEFT);
+////    }
+
+    public Boolean moveTheseus(Direction direction) {
+        Boolean moved = game.moveTheseus(direction);
+        int moveCount = game.getMoveCount();
+//        view.updateCount(moveCount);
+        return moved;
     }
 
-    public Boolean moveDown(Direction direction){
-        return game.moveTheseus(Direction.DOWN);
-    }
-
-    public Boolean moveRight(Direction direction){
-        return game.moveTheseus(Direction.RIGHT);
-    }
-
-    public Boolean moveLeft(Direction direction){
-        return game.moveTheseus(Direction.LEFT);
-    }
 
     public Boolean isWin(){
         return game.isGameFinish();

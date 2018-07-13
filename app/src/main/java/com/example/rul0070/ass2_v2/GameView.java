@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 //import com.example.rul0070.myviewmymodel.R;
@@ -42,6 +43,7 @@ public class GameView extends View {
     private int intCellWidth, intCellHeight, currentTheseusX, currentTheseusY, currentMinotaurX,currentMinotaurY;
     private String moveNum, levelFile;
     private boolean[][] hLines, vLines;
+    private TextView movecountId;
 
 
     public GameView(Context context, Game game) {
@@ -71,13 +73,11 @@ public class GameView extends View {
         cellSizeY = gameController.getCellSizeY();
         hLines = gameController.getHLines();
         vLines = gameController.getVLines();
-        currentTheseusX = gameController.getTheseusX();
-        currentTheseusY = gameController.getTheseusY();
+
         mapFinishX = gameController.getFinalX();
         mapFinishY = gameController.getFinalY();
 
-        currentMinotaurX = gameController.getMinotaurX();
-        currentMinotaurY = gameController.getMinotaurY();
+
     }
 
     public String getGameLevelFile(){
@@ -103,6 +103,10 @@ public class GameView extends View {
     protected void onDraw(Canvas canvas) {
         //fill in the background
         canvas.drawRect(0, 0, mapWidth, mapHeight, background);
+        currentTheseusX = gameController.getTheseusX();
+        currentTheseusY = gameController.getTheseusY();
+        currentMinotaurX = gameController.getMinotaurX();
+        currentMinotaurY = gameController.getMinotaurY();
         this.setCellInt();
         //iterate over the boolean arrays to draw walls
         for (int i = 0; i < cellSizeX; i++) {
@@ -148,17 +152,17 @@ public class GameView extends View {
         boolean moved = false;
         switch(direction) {
             case "up":
-                moved = gameController.moveUp(Direction.UP);
+                moved = gameController.moveTheseus(Direction.UP);
                 break;
             case "down":
-                moved = gameController.moveDown(Direction.DOWN);
+                moved = gameController.moveTheseus(Direction.DOWN);
                 break;
             case "left":
-                moved = gameController.moveLeft(Direction.LEFT);
+                moved = gameController.moveTheseus(Direction.LEFT);
                 System.out.println(moved);
                 break;
             case "right":
-               moved = gameController.moveRight(Direction.RIGHT);
+               moved = gameController.moveTheseus(Direction.RIGHT);
                 System.out.println(moved);
                 break;
             case "pause":
@@ -241,6 +245,15 @@ public class GameView extends View {
         MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.applus);
         mediaPlayer.start();
     }
+
+//    public void setMove(TextView id){
+//        movecountId = id;
+//    }
+//
+//    public void updateCount(int count){
+//        String countString = Integer.toString(count);
+//        movecountId.setText(countString);
+//    }
 
 
 
