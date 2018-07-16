@@ -137,8 +137,6 @@ public class Game implements Serializable {
 		currentTheseusY = Integer.parseInt(tPositions[1]);
 		System.out.println(currentTheseusX);
 		System.out.println(currentTheseusY);
-//		currentTheseusX = 3;
-//		currentTheseusY = 2;
 		originalTheseusX = Integer.parseInt(tPositions[0]);
 		originalTheseusY = Integer.parseInt(tPositions[1]);
 	}
@@ -218,29 +216,24 @@ public class Game implements Serializable {
 			if(currentTheseusY != 0 && !horizontalLines[currentTheseusY-1][currentTheseusX]) {
 				currentTheseusY--;
 				moved = true;
-//				moveCount++;
-
 			}
 		}
 		if(direction == Direction.DOWN) {
 			if(currentTheseusY != sizeY-1 && !horizontalLines[currentTheseusY][currentTheseusX]) {
 				currentTheseusY++;
 				moved = true;
-//				moveCount++;
 			}
 		}
 		if(direction == Direction.RIGHT) {
 			if(currentTheseusX != sizeX-1 && !verticalLines[currentTheseusY][currentTheseusX]) {
 				currentTheseusX++;
 				moved = true;
-//				moveCount++;
 			}
 		}
 		if(direction == Direction.LEFT) {
 			if(currentTheseusX != 0 && !verticalLines[currentTheseusY][currentTheseusX-1]) {
 				currentTheseusX--;
 				moved = true;
-
 			}
 		}
 
@@ -248,9 +241,9 @@ public class Game implements Serializable {
 			if(currentTheseusX == finalX && currentTheseusY == finalY) {
 				finish = true;
 			}
-			else if(currentTheseusX == currentMinotaurX && currentTheseusY == currentMinotaurY) {
-				fail = true;
-			}
+//			else if(currentTheseusX == currentMinotaurX && currentTheseusY == currentMinotaurY) {
+//				fail = true;
+//			}
 		}
 		moveCount++;
 		this.theseusMoves.add(direction);
@@ -258,6 +251,7 @@ public class Game implements Serializable {
 		System.out.println(currentTheseusY);
 		this.moveMinotaur();
 		this.moveMinotaur();
+		this.checkFail();
 		return moved;
 
 	}
@@ -281,8 +275,6 @@ public class Game implements Serializable {
 			direction = Direction.Delay;
 		}
 
-//		Direction direction = theseusMoves.get(theseusMoves.size()-1);
-//		boolean moved = false;
 		if(direction == Direction.UP) {
 			if(currentMinotaurY != 0 && !horizontalLines[currentMinotaurY-1][currentMinotaurX]) {
 				currentMinotaurY--;
@@ -292,25 +284,28 @@ public class Game implements Serializable {
 		if(direction == Direction.DOWN) {
 			if(currentMinotaurY != sizeY-1 && !horizontalLines[currentMinotaurY][currentMinotaurX]) {
 				currentMinotaurY++;
-//				moved = true;
 			}
 		}
 		if(direction == Direction.RIGHT) {
 			if(currentMinotaurX != sizeX-1 && !verticalLines[currentMinotaurY][currentMinotaurX]) {
 				currentMinotaurX++;
-//				moved = true;
 			}
 		}
 		if(direction == Direction.LEFT) {
 			if(currentMinotaurX > 0 && !verticalLines[currentMinotaurY][currentMinotaurX-1]) {
 				currentMinotaurX--;
-//				moved = true;
 			}
 		}
 		if(direction == Direction.Delay){
 			currentMinotaurX = currentMinotaurX;
 		}
 
+	}
+
+	public void checkFail(){
+		if(currentTheseusX == currentMinotaurX && currentTheseusY == currentMinotaurY) {
+			fail = true;
+		}
 	}
 	
 	public boolean isGameFinish() {
@@ -338,7 +333,7 @@ public class Game implements Serializable {
 	public void reset(){
 		this.moveCount = 0;
 		currentMinotaurX = originalMinotaurX ;
-		currentMinotaurX = originalMinotaurY;
+		currentMinotaurY = originalMinotaurY;
 		currentTheseusX = originalTheseusX;
 		currentTheseusY = originalTheseusY;
 	}

@@ -43,7 +43,6 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_game);
-//        setContentView(R.layout.activity_display_game);
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         Object level = extras.get("level");
@@ -56,14 +55,13 @@ public class GameActivity extends AppCompatActivity {
         gameView.setId(R.id.custom_view);
         gameView.setGameLevelFile(levelFile);
         editText = findViewById(R.id.move_count);
-
+        gameView.setMoveId(editText);
     }
 
     @Override
     protected void onStart(){
         super.onStart();
         ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.game_layout);
-
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(layout);
         constraintSet.connect(gameView.getId(), ConstraintSet.TOP, layout.getId(), ConstraintSet.TOP, 8);
@@ -74,13 +72,12 @@ public class GameActivity extends AppCompatActivity {
         layout.addView(gameView);
         editText.setText(Integer.toString(game.getMoveCount()));
 
-
     }
 
-    public String getLevelGameString()
-    {
-        return this.levelGameString;
-    }
+//    public String getLevelGameString()
+//    {
+//        return this.levelGameString;
+//    }
 
     public void onClick(View view) {
         switch (view.getId()) {
@@ -99,11 +96,9 @@ public class GameActivity extends AppCompatActivity {
             case R.id.p_btn:
                 gameView.move("pause");
                 break;
-
-//            case R.id.p_btn:
-//                gameView.move("pause");
-//                break;
-
+            case R.id.reset_btn:
+                gameView.move("reset");
+                break;
         }
     }
 

@@ -9,7 +9,7 @@
 
     <Button
         android:id="@+id/up_btn"
-        android:layout_width="55dp"
+        android:layout_width="65dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -26,7 +26,7 @@
 
     <Button
         android:id="@+id/down_btn"
-        android:layout_width="55dp"
+        android:layout_width="65dp"
         android:layout_height="40dp"
         android:layout_marginBottom="28dp"
         android:layout_marginEnd="8dp"
@@ -58,39 +58,35 @@
 
     <Button
         android:id="@+id/right_btn"
-        android:layout_width="55dp"
+        android:layout_width="65dp"
         android:layout_height="40dp"
         android:layout_marginBottom="72dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:onClick="onClick"
         android:text="Right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.123"
-        app:layout_constraintStart_toEndOf="@+id/left_btn"
-        app:layout_constraintVertical_bias="0.854" />
+        app:layout_constraintHorizontal_bias="0.076"
+        app:layout_constraintStart_toEndOf="@+id/left_btn" />
 
     <Button
         android:id="@+id/left_btn"
-        android:layout_width="55dp"
+        android:layout_width="65dp"
         android:layout_height="40dp"
         android:layout_marginBottom="72dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:onClick="onClick"
         android:text="Left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.025"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.854" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/save_btn"
-        android:layout_width="55dp"
+        android:layout_width="65dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -100,14 +96,14 @@
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.808"
+        app:layout_constraintHorizontal_bias="0.686"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.771" />
 
     <Button
         android:id="@+id/p_btn"
-        android:layout_width="55dp"
+        android:layout_width="70dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -117,10 +113,10 @@
         android:text="Pause"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.808"
+        app:layout_constraintHorizontal_bias="0.686"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/save_btn"
-        app:layout_constraintVertical_bias="0.41" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/count"
@@ -148,6 +144,25 @@
         app:layout_constraintStart_toEndOf="@+id/count"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/reset_btn"
+        android:layout_width="65dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="onClick"
+        android:text="Reset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.636"
+        app:layout_constraintStart_toEndOf="@+id/save_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.771" />
 
     <!--<android.support.constraint.ConstraintLayout-->
         <!--android:id="@+id/btn_layout"-->

@@ -21,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.example.rul0070.myviewmymodel.R;
 
 /**
  * Created by rul0070 on 3/06/2018.
@@ -36,30 +35,24 @@ public class GameView extends View {
     float totalCellWidth, totalCellHeight;     //store result of cellWidth+lineWidth
                                                 //and cellHeight+lineWidth respectively
     private int mapFinishX, mapFinishY;     //the exist point of the map
-    private Game game;
+    private Canvas mazeCanvas;
     private GameController gameController = new GameController(this);
     private Activity context;
-    private Paint line, theseus, minotaur, background, exit, count, move;
+    private Paint line, theseus, minotaur, background, exit;
     private int intCellWidth, intCellHeight, currentTheseusX, currentTheseusY, currentMinotaurX,currentMinotaurY;
-    private String moveNum, levelFile;
     private boolean[][] hLines, vLines;
-    private TextView movecountId;
+    private TextView moveCountId;
 
 
     public GameView(Context context, Game game) {
-
         super(context);
         this.context = (Activity)context;
-
-
         line = new Paint();
         line.setColor(getResources().getColor(R.color.line));
         theseus = new Paint();
         minotaur = new Paint();
         background = new Paint();
         exit = new Paint();
-        count = new Paint();
-        move = new Paint();
         background.setColor(getResources().getColor(R.color.game_bg));
         setFocusable(true);
         this.setFocusableInTouchMode(true);
@@ -67,21 +60,13 @@ public class GameView extends View {
 
 
     public void setGameLevelFile(String fileName ){
-        levelFile = fileName;
         gameController.setGameLevel(context, fileName);
         cellSizeX = gameController.getCellSizeX();
         cellSizeY = gameController.getCellSizeY();
         hLines = gameController.getHLines();
         vLines = gameController.getVLines();
-
         mapFinishX = gameController.getFinalX();
         mapFinishY = gameController.getFinalY();
-
-
-    }
-
-    public String getGameLevelFile(){
-        return levelFile;
     }
 
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -100,22 +85,14 @@ public class GameView extends View {
         intCellHeight = Math.round(cellHeight*0.8f);
     }
 
-    protected void onDraw(Canvas canvas) {
-        //fill in the background
-        canvas.drawRect(0, 0, mapWidth, mapHeight, background);
-        currentTheseusX = gameController.getTheseusX();
-        currentTheseusY = gameController.getTheseusY();
-        currentMinotaurX = gameController.getMinotaurX();
-        currentMinotaurY = gameController.getMinotaurY();
-        this.setCellInt();
-        //iterate over the boolean arrays to draw walls
+    protected void setWalls(){
         for (int i = 0; i < cellSizeX; i++) {
             for (int j = 0; j < cellSizeY; j++) {
                 float x = j * totalCellWidth;
                 float y = i * totalCellHeight;
                 if (j < cellSizeX - 1 && vLines[i][j]) {
                     //we'll draw a vertical line
-                    canvas.drawLine(x + cellWidth,   //start X
+                    mazeCanvas.drawLine(x + cellWidth,   //start X
                             y,               //start Y
                             x + cellWidth,   //stop X
                             y + cellHeight,  //stop Y
@@ -123,7 +100,7 @@ public class GameView extends View {
                 }
                 if (i < cellSizeY - 1 && hLines[i][j]) {
                     //we'll draw a horizontal line
-                    canvas.drawLine(x,               //startX
+                    mazeCanvas.drawLine(x,               //startX
                             y + cellHeight,  //startY
                             x + cellWidth,   //stopX
                             y + cellHeight,  //stopY
@@ -131,23 +108,77 @@ public class GameView extends View {
                 }
             }
         }
+    }
 
+    protected void setExit(){
+        //draw the Exit point
+        Bitmap f = BitmapFactory.decodeResource(getResources(), R.drawable.exit);
+        Bitmap resizeF = Bitmap.createScaledBitmap(f, intCellWidth, intCellHeight, true);
+        mazeCanvas.drawBitmap(resizeF, (mapFinishX * totalCellWidth) + (cellWidth / 8), mapFinishY * totalCellHeight, exit);
+    }
+
+    protected void setTheseus(){
         //draw the theseus
         Bitmap t = BitmapFactory.decodeResource(getResources(), R.drawable.theseus);
         Bitmap resizeT = Bitmap.createScaledBitmap(t, intCellWidth, intCellHeight, true);
-        canvas.drawBitmap(resizeT, (currentTheseusX * totalCellWidth) + (cellWidth / 8), currentTheseusY * totalCellHeight, theseus);
+        mazeCanvas.drawBitmap(resizeT, (currentTheseusX * totalCellWidth) + (cellWidth / 8), currentTheseusY * totalCellHeight, theseus);
 
+    }
+
+    protected void setMinotaur(){
         //draw the minotaur
         Bitmap m = BitmapFactory.decodeResource(getResources(), R.drawable.minotaur);
         Bitmap resizeM = Bitmap.createScaledBitmap(m, intCellWidth, intCellHeight, true);
-        canvas.drawBitmap(resizeM, (currentMinotaurX * totalCellWidth) + (cellWidth / 8), currentMinotaurY * totalCellHeight, minotaur);
-
-        //draw the finishing point indicator
-        Bitmap f = BitmapFactory.decodeResource(getResources(), R.drawable.exit);
-        Bitmap resizeF = Bitmap.createScaledBitmap(f, intCellWidth, intCellHeight, true);
-        canvas.drawBitmap(resizeF, (mapFinishX * totalCellWidth) + (cellWidth / 8), mapFinishY * totalCellHeight, exit);
+        mazeCanvas.drawBitmap(resizeM, (currentMinotaurX * totalCellWidth) + (cellWidth / 8), currentMinotaurY * totalCellHeight, minotaur);
 
     }
+
+    protected void onDraw(Canvas canvas) {
+        mazeCanvas = canvas;
+        //fill in the background
+        mazeCanvas.drawRect(0, 0, mapWidth, mapHeight, background);
+        currentTheseusX = gameController.getTheseusX();
+        currentTheseusY = gameController.getTheseusY();
+        currentMinotaurX = gameController.getMinotaurX();
+        currentMinotaurY = gameController.getMinotaurY();
+        this.setCellInt();
+        this.setWalls();
+        this.setExit();
+        this.setMinotaur();
+        this.setTheseus();
+
+    }
+
+    public void buildFinishDialog(String title){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(title);
+        LayoutInflater inflater = context.getLayoutInflater();
+        View view = inflater.inflate(R.layout.activity_game_finish, null);
+        builder.setView(view);
+        View closeButton =view.findViewById(R.id.closeGame);
+        View playButton = view.findViewById(R.id.startGame);
+        closeButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view.getId() == R.id.closeGame) {
+                    context.finish();
+                }
+            }
+        });
+        playButton.setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if(view.getId() == R.id.startGame) {
+                    Intent intent=new Intent(view.getContext(),MainActivity.class);
+                    context.startActivity(intent);
+                }
+            }
+        });
+
+        AlertDialog finishDialog = builder.create();
+        finishDialog.show();
+    }
+
     public boolean move(String direction) {
         boolean moved = false;
         switch(direction) {
@@ -168,68 +199,19 @@ public class GameView extends View {
             case "pause":
                 moved = gameController.pause();
                 break;
+            case "reset":
+                moved = gameController.reset();
+                break;
         }
         if(moved) {
             invalidate();
             if(gameController.isWin()) {
                 this.playWin();
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle(context.getText(R.string.win_title));
-                LayoutInflater inflater = context.getLayoutInflater();
-                View view = inflater.inflate(R.layout.activity_game_finish, null);
-                builder.setView(view);
-                View closeButton =view.findViewById(R.id.closeGame);
-                View playButton = view.findViewById(R.id.startGame);
-                closeButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(view.getId() == R.id.closeGame) {
-                            context.finish();
-                        }
-                    }
-                });
-                playButton.setOnClickListener(new OnClickListener(){
-                    @Override
-                    public void onClick(View view) {
-                        if(view.getId() == R.id.startGame) {
-                            Intent intent=new Intent(view.getContext(),MainActivity.class);
-                            context.startActivity(intent);
-                        }
-                    }
-                });
-
-                AlertDialog finishDialog = builder.create();
-                finishDialog.show();
+                this.buildFinishDialog(context.getText(R.string.win_title).toString());
             }
             else if (gameController.isFail()) {
                 this.playFail();
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle(context.getText(R.string.fail_title));
-                LayoutInflater inflater = context.getLayoutInflater();
-                View view = inflater.inflate(R.layout.activity_game_finish, null);
-                builder.setView(view);
-                View closeButton =view.findViewById(R.id.closeGame);
-                View playButton = view.findViewById(R.id.startGame);
-                closeButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(view.getId() == R.id.closeGame) {
-                            context.finish();
-                        }
-                    }
-                });
-                playButton.setOnClickListener(new OnClickListener(){
-                    @Override
-                    public void onClick(View view) {
-                        if(view.getId() == R.id.startGame) {
-                            Intent intent=new Intent(view.getContext(),MainActivity.class);
-                            context.startActivity(intent);
-                        }
-                    }
-                });
-
-                AlertDialog finishDialog = builder.create();
-                finishDialog.show();
+                this.buildFinishDialog(context.getText(R.string.fail_title).toString());
             }
         }
         return true;
@@ -246,16 +228,13 @@ public class GameView extends View {
         mediaPlayer.start();
     }
 
-//    public void setMove(TextView id){
-//        movecountId = id;
-//    }
-//
-//    public void updateCount(int count){
-//        String countString = Integer.toString(count);
-//        movecountId.setText(countString);
-//    }
+    public void setMoveId(TextView id){
+        moveCountId = id;
+    }
 
-
-
+    public void updateCount(int count){
+        String countString = Integer.toString(count);
+        moveCountId.setText(countString);
+    }
 
 }
