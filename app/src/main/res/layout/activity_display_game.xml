@@ -19,10 +19,10 @@
         android:text="Up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.173"
+        app:layout_constraintHorizontal_bias="0.171"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.771" />
+        app:layout_constraintVertical_bias="0.806" />
 
     <Button
         android:id="@+id/down_btn"
@@ -36,7 +36,7 @@
         android:text="down"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.172"
+        app:layout_constraintHorizontal_bias="0.171"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/up_btn"
         app:layout_constraintVertical_bias="1.0" />
@@ -86,7 +86,7 @@
 
     <Button
         android:id="@+id/save_btn"
-        android:layout_width="65dp"
+        android:layout_width="70dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -147,7 +147,7 @@
 
     <Button
         android:id="@+id/reset_btn"
-        android:layout_width="65dp"
+        android:layout_width="70dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -163,6 +163,25 @@
         app:layout_constraintStart_toEndOf="@+id/save_btn"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.771" />
+
+    <Button
+        android:id="@+id/undo_btn"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="onClick"
+        android:text="Undo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.619"
+        app:layout_constraintStart_toEndOf="@+id/p_btn"
+        app:layout_constraintTop_toBottomOf="@+id/reset_btn"
+        app:layout_constraintVertical_bias="0.0" />
 
     <!--<android.support.constraint.ConstraintLayout-->
         <!--android:id="@+id/btn_layout"-->

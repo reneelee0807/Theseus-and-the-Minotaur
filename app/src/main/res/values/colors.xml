@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="bgColour">#F0F8FF</color>
     <color name="startBtn">#F8F8FF</color>
-    <color name="game_bg">#dddddd</color>
+    <color name="game_bg">#F0F8FF</color>
     <color name="line">#000000</color>
     <color name="position">#ff0000</color>
 </resources>

@@ -19,8 +19,18 @@ public class Game implements Serializable {
 	private boolean fail;
 	public String levelString = "";
 	private int moveCount = 0; 
-	public ArrayList<Direction> theseusMoves = new ArrayList<Direction>();
-	public ArrayList<Direction> minotaurMoves = new ArrayList<Direction>();
+//	public ArrayList<Direction> theseusMoves = new ArrayList<Direction>();
+////	public ArrayList<Direction> minotaurMoves = new ArrayList<Direction>();
+//	public int[][] theseusMoves;
+////	public int[][] minotaurMoves;
+//	public ArrayList<ArrayList<Integer>> theseusMoves = new ArrayList<ArrayList<Integer>>();
+//	public ArrayList<ArrayList<Integer>> minotaurMoves = new ArrayList<ArrayList<Integer>>();
+	public ArrayList<Integer> theseusX = new ArrayList<Integer>();
+	public ArrayList<Integer> theseusY = new ArrayList<Integer>();
+	public ArrayList<Integer>  minotaurX = new ArrayList<Integer>();
+	public ArrayList<Integer>  minotaurY = new ArrayList<Integer>();
+
+
 	protected char[][] vLinesChar;
 	protected char[][] hLinesChar;
 	private int originalTheseusX, originalTheseusY;   
@@ -209,9 +219,61 @@ public class Game implements Serializable {
 	public int getMoveCount() {
 		return moveCount;
 	}
+
+	public void getTheseusPreviousLocation(){
+		this.theseusX.add(currentTheseusX);
+		this.theseusY.add(currentTheseusY);
+	}
+
+	public void getMinotaurPreviousLocation(){
+		this.minotaurX.add(currentMinotaurX);
+		this.minotaurY.add(currentMinotaurY);
+	}
+
+	public void removeLatestTheseusLocation(){
+		this.theseusX.remove(theseusX.size()-1);
+		this.theseusY.remove(theseusY.size()-1);
+	}
+
+	public void removeLatestMinotaurLocation(){
+		this.minotaurX.remove(minotaurX.size()-1);
+		this.minotaurY.remove(minotaurY.size()-1);
+	}
+
+	public void undoTheseus(){
+		if(theseusX.size()-1 >= 0){
+			currentTheseusX = theseusX.get(theseusX.size()-1);
+			currentTheseusY = theseusY.get(theseusY.size()-1);
+			this.removeLatestTheseusLocation();
+		}
+		else if(theseusX.size()-1 < 0){
+			currentTheseusX = currentTheseusX;
+			currentTheseusY = currentTheseusY;
+		}
+	}
+
+	public void undoMinotaur(){
+		if(minotaurX.size()-2 >= 0){
+			currentMinotaurX = minotaurX.get(minotaurX.size()-2);
+			currentMinotaurY = minotaurY.get(minotaurY.size()-2);
+			this.removeLatestMinotaurLocation();
+			this.removeLatestMinotaurLocation();
+		}
+		else if(minotaurX.size()-2 < 0){
+			currentMinotaurX = currentMinotaurX;
+			currentMinotaurY = currentMinotaurY;
+		}
+	}
+
+	public void undo(){
+		this.undoTheseus();
+		this.undoMinotaur();
+		moveCount++;
+	}
 	
 	public boolean moveTheseus(Direction direction) {
 		boolean moved = false;
+		this.getTheseusPreviousLocation();
 		if(direction == Direction.UP) {
 			if(currentTheseusY != 0 && !horizontalLines[currentTheseusY-1][currentTheseusX]) {
 				currentTheseusY--;
@@ -241,14 +303,8 @@ public class Game implements Serializable {
 			if(currentTheseusX == finalX && currentTheseusY == finalY) {
 				finish = true;
 			}
-//			else if(currentTheseusX == currentMinotaurX && currentTheseusY == currentMinotaurY) {
-//				fail = true;
-//			}
 		}
 		moveCount++;
-		this.theseusMoves.add(direction);
-		System.out.println(currentTheseusX);
-		System.out.println(currentTheseusY);
 		this.moveMinotaur();
 		this.moveMinotaur();
 		this.checkFail();
@@ -259,6 +315,7 @@ public class Game implements Serializable {
 	
 	public void moveMinotaur() {
 		Direction direction = null;
+		this.getMinotaurPreviousLocation();
 		if(currentTheseusX < currentMinotaurX){
 			direction = Direction.LEFT;
 		}

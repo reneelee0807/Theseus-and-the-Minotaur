@@ -7,16 +7,9 @@ import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
@@ -99,6 +92,11 @@ public class GameActivity extends AppCompatActivity {
             case R.id.reset_btn:
                 gameView.move("reset");
                 break;
+            case R.id.undo_btn:
+                gameView.move("undo");
+                break;
+
+
         }
     }
 

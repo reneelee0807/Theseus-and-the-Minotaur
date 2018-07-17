@@ -202,6 +202,10 @@ public class GameView extends View {
             case "reset":
                 moved = gameController.reset();
                 break;
+            case "undo":
+                moved = gameController.undo();
+                break;
+
         }
         if(moved) {
             invalidate();

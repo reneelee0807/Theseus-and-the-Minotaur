@@ -88,4 +88,10 @@ public class GameController {
         return true;
     }
 
+    public boolean undo(){
+        game.undo();
+        this.getCount();
+        return true;
+    }
+
 }
