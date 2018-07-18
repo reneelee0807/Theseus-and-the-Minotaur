@@ -18,13 +18,7 @@ public class Game implements Serializable {
 	private boolean finish;
 	private boolean fail;
 	public String levelString = "";
-	private int moveCount = 0; 
-//	public ArrayList<Direction> theseusMoves = new ArrayList<Direction>();
-////	public ArrayList<Direction> minotaurMoves = new ArrayList<Direction>();
-//	public int[][] theseusMoves;
-////	public int[][] minotaurMoves;
-//	public ArrayList<ArrayList<Integer>> theseusMoves = new ArrayList<ArrayList<Integer>>();
-//	public ArrayList<ArrayList<Integer>> minotaurMoves = new ArrayList<ArrayList<Integer>>();
+	private int moveCount = 0;
 	public ArrayList<Integer> theseusX = new ArrayList<Integer>();
 	public ArrayList<Integer> theseusY = new ArrayList<Integer>();
 	public ArrayList<Integer>  minotaurX = new ArrayList<Integer>();
@@ -64,12 +58,20 @@ public class Game implements Serializable {
 	public void load(Context context, String newLevel) {
 		this.filer = new Filer();
 		levelString = filer.loadFile(context, newLevel);
-
 		this.setVerticalLines(levelString);
 		this.setHorizontalLines(levelString);
 		this.SetCurrentTheseus(levelString);
 		this.SetCurrentMinotaur(levelString);
 		this.SetExit(levelString);
+
+	}
+
+	public void readLevel(String levelContent){
+		this.setVerticalLines(levelContent);
+		this.setHorizontalLines(levelContent);
+		this.SetCurrentTheseus(levelContent);
+		this.SetCurrentMinotaur(levelContent);
+		this.SetExit(levelContent);
 	}
 	
 	public void setVerticalLines(String levelString){

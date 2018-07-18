@@ -17,36 +17,67 @@ import java.util.ArrayList;
  */
 
 public class GameActivity extends AppCompatActivity {
-    private ArrayList<String> levelList;
-    private String fileName;
-    private String file;
-    private ListView listView;
-    private ArrayAdapter adapter;
-    private Filer filer;
+
     private TextView editText;
     private Game game;
-    private GameCreator gameCreator;
-    protected String levelGameString;
     private GameView gameView;
-    private GameController gameControl = new GameController(gameView);
     public String levelFile;
+    private Level selectedLevel;
+    private LevelDataBase levelDB;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_game);
+
+
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        Object level = extras.get("level");
-        int item = Integer.parseInt(String.valueOf(level));
-        final String[] files = {"level1.txt", "level2.txt", "level3.txt"};
-        filer = new Filer();
-        levelFile = files[item];
+        // intent for loading game from local file
+        if(intent.hasExtra("level")){
+            Object level = extras.get("level");
+            int item = Integer.parseInt(String.valueOf(level));
+            final String[] files = {"level1.txt", "level2.txt", "level3.txt"};
+            levelFile = files[item];
+
+//            this.setView();
+            game = new Game();
+            gameView= new GameView(this, game);
+            gameView.setGameLevelFile(levelFile);
+            gameView.setId(R.id.custom_view);
+            editText = findViewById(R.id.move_count);
+            gameView.setMoveId(editText);
+        }
+        else{
+    //      intent for loading from DB
+            levelDB = new LevelDataBase(this);
+            int id = extras.getInt("levelId");
+            String levelContent = extras.getString("levelContent");
+            int moveNum = extras.getInt("move");
+            String levelName = extras.getString("levelName");
+            if(id!= 0) {
+                selectedLevel = new Level(id, levelContent, 0);
+            }
+            else{
+                selectedLevel = new Level(levelName, levelContent, moveNum);
+            }
+
+//            this.setView();
+            game = new Game();
+            gameView= new GameView(this, game);
+            gameView.setGameLevelDB(levelContent);
+            gameView.setId(R.id.custom_view);
+            editText = findViewById(R.id.move_count);
+            gameView.setMoveId(editText);
+        }
+
+    }
+
+    public void setView(){
         game = new Game();
         gameView= new GameView(this, game);
         gameView.setId(R.id.custom_view);
-        gameView.setGameLevelFile(levelFile);
         editText = findViewById(R.id.move_count);
         gameView.setMoveId(editText);
     }
@@ -67,10 +98,6 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-//    public String getLevelGameString()
-//    {
-//        return this.levelGameString;
-//    }
 
     public void onClick(View view) {
         switch (view.getId()) {

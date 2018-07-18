@@ -18,6 +18,10 @@ public class GameController {
         game.load(context, fileName);
     }
 
+    public void setDBLevel(Context context, String levelContent){
+        game.readLevel(levelContent);
+    }
+
     public int getFinalX(){
         return game.getFinalX();
     }

@@ -61,12 +61,21 @@ public class GameView extends View {
 
     public void setGameLevelFile(String fileName ){
         gameController.setGameLevel(context, fileName);
+        this.getLevel();
+    }
+
+    public void getLevel(){
         cellSizeX = gameController.getCellSizeX();
         cellSizeY = gameController.getCellSizeY();
         hLines = gameController.getHLines();
         vLines = gameController.getVLines();
         mapFinishX = gameController.getFinalX();
         mapFinishY = gameController.getFinalY();
+    }
+
+    public void setGameLevelDB(String levelContent){
+        gameController.setDBLevel(context,levelContent );
+        this.getLevel();
     }
 
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
